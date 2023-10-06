@@ -1,0 +1,34 @@
+@use '../../style/service.scss' as s;
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem 8.5rem;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.main {
+  background-color: s.color('main');
+  color: s.color('white');
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.secondary {
+  background-color: s.color('white');
+  color: s.color('main');
+  border: 1px solid s.color('main');
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+.disabled {
+  background-color: s.color('main');
+  color: s.color('white');
+  opacity: 0.8;
+}

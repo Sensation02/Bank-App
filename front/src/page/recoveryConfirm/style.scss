@@ -1,0 +1,8 @@
+@use '../../style/service.scss' as s;
+
+.recovery {
+  @include s.form();
+  .recovery__container {
+    @include s.form__content();
+  }
+}

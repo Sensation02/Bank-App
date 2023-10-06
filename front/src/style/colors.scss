@@ -1,0 +1,14 @@
+$colors: (
+  'main': #775ce5,
+  'gray': #e9e8eb,
+  'white': #fff,
+  'yellow': #f2883d,
+  'red': #f23152,
+  'blue': #5b94e9,
+  'green': #26bf80,
+  'black': #121212,
+);
+
+@function color($key) {
+  @return map-get($colors, $key);
+}

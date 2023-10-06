@@ -1,0 +1,5 @@
+@use '../../style/service.scss' as s;
+
+.signup-confirm {
+  @include s.form();
+}

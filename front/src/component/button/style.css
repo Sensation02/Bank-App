@@ -1,0 +1,33 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.25rem 8.5rem;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.main {
+  background-color: #775ce5;
+  color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+.main:hover {
+  opacity: 0.8;
+}
+
+.secondary {
+  background-color: #fff;
+  color: #775ce5;
+  border: 1px solid #775ce5;
+  transition: all 0.3s ease-in-out;
+}
+.secondary:hover {
+  opacity: 0.8;
+}
+
+.disabled {
+  background-color: #775ce5;
+  color: #fff;
+  opacity: 0.8;
+}

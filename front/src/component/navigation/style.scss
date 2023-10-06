@@ -1,0 +1,18 @@
+@use '../../style/service.scss' as s;
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  &__button {
+    @include s.icon;
+  }
+  &__title {
+    font-size: s.font-size(subtitle);
+    font-weight: 500;
+  }
+  .icon {
+    @include s.icon;
+  }
+}

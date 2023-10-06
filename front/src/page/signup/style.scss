@@ -1,0 +1,23 @@
+@use '../../style/service.scss' as s;
+
+.signup {
+  @include s.form();
+
+  .form {
+    @include s.form__content();
+
+    .form__message {
+      @include s.form__message();
+    }
+    .alert {
+      font-size: s.font-size(text-regular);
+      color: s.color('yellow');
+      &--disabled {
+        display: none;
+      }
+      .icon {
+        @include s.icon();
+      }
+    }
+  }
+}

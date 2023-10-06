@@ -1,0 +1,40 @@
+.signup {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding: 2rem;
+  gap: 4rem;
+  height: 100%;
+}
+.signup .form {
+  width: 100%;
+  max-width: 393px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.signup .form .form__message {
+  font-size: 1rem;
+}
+.signup .form .form__message a {
+  color: #775ce5;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: all 0.1s ease-in-out;
+}
+.signup .form .form__message a:hover {
+  font-weight: 700;
+}
+.signup .form .alert {
+  font-size: 1rem;
+  color: #f2883d;
+}
+.signup .form .alert--disabled {
+  display: none;
+}
+.signup .form .alert .icon {
+  width: 24px;
+  height: 24px;
+}

@@ -1,0 +1,12 @@
+$fonts: (
+  'title-main': 2.625rem,
+  'title-secondary': 1.5rem,
+  'subtitle': 1.25rem,
+  'text-regular': 1rem,
+  'text-small': 0.875rem,
+  'text-smaller': 0.75rem,
+);
+
+@function font-size($key) {
+  @return map-get($fonts, $key);
+}

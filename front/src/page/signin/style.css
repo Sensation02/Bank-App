@@ -1,0 +1,30 @@
+.signin {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding: 2rem;
+  gap: 4rem;
+  height: 100%;
+}
+.signin .form {
+  width: 100%;
+  max-width: 393px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+.signin .form .form__message {
+  font-size: 1rem;
+  color: #121212;
+}
+.signin .form .form__message a {
+  color: #775ce5;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: all 0.1s ease-in-out;
+}
+.signin .form .form__message a:hover {
+  font-weight: 700;
+}

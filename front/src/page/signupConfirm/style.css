@@ -1,0 +1,9 @@
+.signup-confirm {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding: 2rem;
+  gap: 4rem;
+  height: 100%;
+}

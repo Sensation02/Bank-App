@@ -1,0 +1,17 @@
+.recovery {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding: 2rem;
+  gap: 4rem;
+  height: 100%;
+}
+.recovery .recovery__container {
+  width: 100%;
+  max-width: 393px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}

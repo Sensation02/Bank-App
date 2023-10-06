@@ -1,0 +1,11 @@
+@use '../../style/service.scss' as s;
+
+.signin {
+  @include s.form();
+  .form {
+    @include s.form__content();
+    .form__message {
+      @include s.form__message();
+    }
+  }
+}

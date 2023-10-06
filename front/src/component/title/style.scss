@@ -1,0 +1,23 @@
+@use '../../style/service.scss' as s;
+
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  color: s.color('white');
+
+  .title {
+    font-size: s.font-size(title-main);
+    font-weight: 600;
+  }
+  .subtitle {
+    font-size: s.font-size(subtitle);
+    font-weight: 400;
+  }
+}
+
+.black {
+  color: s.color('black');
+}
