@@ -16,7 +16,7 @@ enum FIELD_NAME {
 
 const EMAIL_REGEX = new RegExp(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)
 
-class SignUp {
+export class SignUp {
   value = {}
   error = {}
   disabled = true
