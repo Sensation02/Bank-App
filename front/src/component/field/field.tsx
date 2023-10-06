@@ -2,14 +2,16 @@ import React, { useState } from 'react'
 import './style.scss'
 import showIcon from '../../assets/icons/show.svg'
 import hideIcon from '../../assets/icons/hide.svg'
-
-type FieldType = 'email' | 'password' | 'text'
+import { ErrorType } from '../../utils/hooks/useInput'
 
 interface IFieldProps {
-  type: FieldType
+  type: 'email' | 'password' | 'text'
   placeholder: string
   title: string
-  value?: string
+  value: string
+  name: string
+  error: string | ErrorType
+  id: 'email' | 'password' | 'text'
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -18,12 +20,13 @@ const Field: React.FC<IFieldProps> = ({
   type,
   placeholder,
   value,
+  name,
+  error,
+  id,
   onChange,
 }) => {
-  // Визначаємо стан для іконки
   const [icon, setIcon] = useState(showIcon)
 
-  // Визначаємо функцію для зміни типу інпута
   const handleIcon = () => {
     if (type === 'password') {
       icon === showIcon ? setIcon(hideIcon) : setIcon(showIcon)
@@ -32,7 +35,13 @@ const Field: React.FC<IFieldProps> = ({
 
   return (
     <div className='field'>
-      {title ? <h3 className='field__title'>{title}</h3> : ''}
+      {title ? (
+        <label className='field__title' htmlFor={id}>
+          {title}
+        </label>
+      ) : (
+        ''
+      )}
 
       <input
         type={
@@ -42,6 +51,8 @@ const Field: React.FC<IFieldProps> = ({
         placeholder={placeholder}
         onChange={onChange}
         value={value}
+        name={name}
+        id={id}
       />
       {type === 'password' ? (
         <img
@@ -53,6 +64,7 @@ const Field: React.FC<IFieldProps> = ({
       ) : (
         ''
       )}
+      {error ? <p className='field__error'>{error}</p> : ''}
     </div>
   )
 }

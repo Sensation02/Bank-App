@@ -20,7 +20,7 @@ const SignupConfirm: React.FC = () => {
         subtitle='Write the code you received'
         isBlack
       />
-      <Field type='text' placeholder='123456' title='Code' />
+      {/* <Field type='text' placeholder='123456' title='Code' /> */}
       <Button text='Confirm' isMain />
     </section>
   )

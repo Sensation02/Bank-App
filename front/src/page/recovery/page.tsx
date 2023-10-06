@@ -14,7 +14,7 @@ const Recovery: React.FC = () => {
           subtitle='Choose a recovery method'
           isBlack
         />
-        <Field title='Email' type='email' placeholder='example123@mail.com' />
+        {/* <Field title='Email' type='email' placeholder='example123@mail.com' /> */}
         <Button text='Send' isMain />
       </div>
     </section>

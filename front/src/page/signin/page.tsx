@@ -15,12 +15,12 @@ const Signin: React.FC = () => {
       <Navigation handleClick={handleBack} />
       <Title title='Sign in' subtitle='Welcome back!' isBlack />
       <form action='POST' className='form'>
-        <Field title='Email' type='email' placeholder='example123@mail.com' />
+        {/* <Field title='Email' type='email' placeholder='example123@mail.com' />
         <Field
           title='Password'
           type='password'
           placeholder='your password here'
-        />
+        /> */}
         <p className='form__message'>
           Forgot your password?
           <Link to={'/recovery'} className='form__link'>
