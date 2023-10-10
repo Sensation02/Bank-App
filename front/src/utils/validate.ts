@@ -1,59 +1,59 @@
-enum ErrorType {
-  INCORRECT = 'incorrect email',
-  PASSWORD_SIMPLE = 'password is too simple, try again',
-  PASSWORD_SHORT = 'password must be at least 8 characters long',
-  CONTAIN_BIG = 'password must contain at least one uppercase letter',
-  CONTAIN_SPECIAL = 'password must contain at least one special character',
-  CONTAIN_NUMBER = 'password must contain at least one number',
-  IS_EMPTY = 'field is empty',
-  IS_SHORT = 'email is too short',
+const EMAIL_REGEX = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)
+enum EmailErrors {
+  REQUIRED = 'Email is required',
+  INVALID = 'Invalid email',
+  LATIN = 'Email must contain only latin letters',
+}
+enum PasswordErrors {
+  REQUIRED = 'Password is required',
+  IS_SHORT = 'Password must be at least 8 characters',
+  CONTAIN_UPPERCASE = 'Password must contain at least one uppercase letter',
+  CONTAIN_SPECIAL_CHARACTER = 'Password must contain at least one special character',
+  CONTAIN_NUMBER = 'Password must contain at least one number',
+}
+enum TokenErrors {
+  REQUIRED = 'Code is required',
+  INVALID = 'Invalid code',
 }
 
-enum FIELD_NAME {
-  EMAIL = 'email',
-  PASSWORD = 'password',
+export const validateEmail = {
+  required: EmailErrors.REQUIRED,
+  validate: (value: string) => {
+    if (!value.match(/^[A-Za-z0-9@.]+$/)) {
+      return EmailErrors.LATIN
+    }
+    if (value.match(EMAIL_REGEX)) {
+      return EmailErrors.INVALID
+    }
+    return true
+  },
 }
 
-const EMAIL_REGEX = new RegExp(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)
+export const validatePassword = {
+  required: PasswordErrors.REQUIRED,
+  validate: (value: string) => {
+    if (value.length < 8) {
+      return PasswordErrors.IS_SHORT
+    }
+    if (!value.match(/[A-Z]/)) {
+      return PasswordErrors.CONTAIN_UPPERCASE
+    }
+    if (!value.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)) {
+      return PasswordErrors.CONTAIN_SPECIAL_CHARACTER
+    }
+    if (!value.match(/[0-9]/)) {
+      return PasswordErrors.CONTAIN_NUMBER
+    }
+    return true
+  },
+}
 
-export class SignUp {
-  value = {}
-  error = {}
-  disabled = true
-
-  validate = (name: string, value: string) => {
-    if (value.length < 1) {
-      return ErrorType.IS_EMPTY
+export const validateToken = {
+  required: TokenErrors.REQUIRED,
+  validate: (value: string) => {
+    if (!value.match(/^[A-Za-z0-9]+$/)) {
+      return TokenErrors.INVALID
     }
-    if (name === FIELD_NAME.EMAIL) {
-      if (value.length < 5) {
-        return ErrorType.IS_SHORT
-      }
-      if (!EMAIL_REGEX.test(value)) {
-        return ErrorType.INCORRECT
-      }
-    }
-    if (name === FIELD_NAME.PASSWORD) {
-      if (value.length < 8) {
-        return ErrorType.PASSWORD_SHORT
-      }
-      if (!value.match(/[A-Z]/)) {
-        return ErrorType.CONTAIN_BIG
-      }
-      if (!value.match(/[0-9]/)) {
-        return ErrorType.CONTAIN_NUMBER
-      }
-      if (!value.match(/[!@#$%^&*]/)) {
-        return ErrorType.CONTAIN_SPECIAL
-      }
-    }
-  }
-
-  validateAll = (email: string, password: string) => {
-    const errors = {
-      email: this.validate(FIELD_NAME.EMAIL, email),
-      password: this.validate(FIELD_NAME.PASSWORD, password),
-    }
-    return errors
-  }
+    return true
+  },
 }

@@ -2,9 +2,9 @@ import './style.scss'
 import Title from '../../component/title/title'
 import Button from '../../component/button/button'
 import Navigation from '../../component/navigation/navigation'
-import Field from '../../component/field/field'
 import { SignupSteps } from '../../utils/navRoutes'
 import { useNavigate } from 'react-router-dom'
+import Form from '../../component/form/form'
 
 const SignupConfirm: React.FC = () => {
   const navigation = useNavigate()
@@ -20,7 +20,7 @@ const SignupConfirm: React.FC = () => {
         subtitle='Write the code you received'
         isBlack
       />
-      {/* <Field type='text' placeholder='123456' title='Code' /> */}
+      <Form isToken />
       <Button text='Confirm' isMain />
     </section>
   )

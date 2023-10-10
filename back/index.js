@@ -95,3 +95,29 @@ function onListening() {
     'Listening on ' + 'http://localhost:' + addr.port,
   )
 }
+
+/**
+ * Event logs
+ */
+
+const logEvents = require('./logEvents')
+
+const EventEmitter = require('events')
+
+class myEmitter extends EventEmitter {}
+
+// initialize obj
+const myEmitterObj = new myEmitter()
+
+// adding listener for the log event
+myEmitterObj.on('log', (message) => {
+  logEvents(message)
+})
+
+// emit log event after 1 second
+setTimeout(() => {
+  myEmitterObj.emit('log', 'Server started')
+}, 1000)
+
+// after starting the server, you can see the logs in the logs/eventsLog.txt file
+// and we will receive a message in the console after 1 second that the server has started or performed some other action:

@@ -17,8 +17,10 @@
 }
 .signup .form .form__message {
   font-size: 1rem;
+  color: #121212;
 }
 .signup .form .form__message a {
+  padding-left: 0.5rem;
   color: #775ce5;
   cursor: pointer;
   text-decoration: underline;
