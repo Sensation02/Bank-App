@@ -8,15 +8,16 @@ const fsPromise = require('fs').promises
 const path = require('path')
 
 const logEvents = async (message) => {
-  const logPath = path.join(__dirname, 'logs')
+  const logPath = path.join(__dirname, '..', 'logs')
   const logFile = path.join(logPath, 'eventsLog.txt')
   const dateTime = format(new Date(), 'yyyy-MM-dd HH:mm:ss')
 
-  const logItem = {
-    id: uuid(), // unique id for each log
-    timestamp: dateTime, // date and time of the event
-    message, // the event message
-  }
+  // const logItem = {
+  //   id: uuid(), // unique id for each log
+  //   timestamp: dateTime, // date and time of the event
+  //   message, // the event message
+  // }
+  const logItem = `Log ==== ${dateTime} --- ${uuid()} --- ${message}`
   console.log(logItem)
 
   // create the logs directory if it doesn't exist:
@@ -32,7 +33,7 @@ const logEvents = async (message) => {
   try {
     await fsPromise.appendFile(
       logFile,
-      `${JSON.stringify(logItem)}\n`,
+      `${JSON.stringify(logItem)}\n\n`,
     )
   } catch (error) {
     throw error

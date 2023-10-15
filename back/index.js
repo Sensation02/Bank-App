@@ -84,6 +84,20 @@ function onError(error) {
  * Event listener for HTTP server "listening" event.
  */
 
+// const mongoose = require('mongoose')
+// const connectDB = require('./config/dbConn')
+
+// // Connect to MongoDB:
+// connectDB()
+// mongoose.connection.once('open', () => {
+//   console.log('Mongoose connected to db')
+//   app.listen(port, () => {
+//     console.log(
+//       'Listening on ' + 'http://localhost:' + port,
+//     )
+//   })
+// })
+
 function onListening() {
   const addr = server.address()
   const bind =
@@ -100,23 +114,22 @@ function onListening() {
  * Event logs
  */
 
-const logEvents = require('./logEvents')
-
+const logEvents = require('./middleware/logEvents')
 const EventEmitter = require('events')
 
-class myEmitter extends EventEmitter {}
+class Emitter extends EventEmitter {}
 
 // initialize obj
-const myEmitterObj = new myEmitter()
+const myEmitter = new Emitter()
 
 // adding listener for the log event
-myEmitterObj.on('log', (message) => {
+myEmitter.on('log', (message) => {
   logEvents(message)
 })
 
 // emit log event after 1 second
 setTimeout(() => {
-  myEmitterObj.emit('log', 'Server started')
+  myEmitter.emit('log', 'Server started')
 }, 1000)
 
 // after starting the server, you can see the logs in the logs/eventsLog.txt file

@@ -1,3 +1,4 @@
+require('dotenv').config()
 const createError = require('http-errors')
 const express = require('express')
 const path = require('path')
@@ -15,6 +16,7 @@ const app = express()
 
 dotenv.config()
 
+// CORS middleware:
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
   res.header(
@@ -28,10 +30,15 @@ app.use((req, res, next) => {
   next()
 })
 
+// middleware for logging events:
 app.use(logger('dev'))
+// middleware for json body parsing:
 app.use(express.json())
+// middleware for urlencoded body parsing:
 app.use(express.urlencoded({ extended: false }))
+// middleware for cookie parsing:
 app.use(cookieParser())
+
 app.use(express.static(path.join(__dirname, 'public')))
 
 if (process.env.NODE_ENV === 'development') {
