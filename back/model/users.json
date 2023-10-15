@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "email": "example@email.com",
+    "password": "password"
+  },
+  {
+    "id": 2,
+    "email": "email@email.com.ua",
+    "password": "$2b$10$gbZY7O/SqSqkmiZgM0JZH.IMbDNA3FpAQ5sChQpVQ/T1naStIyCjG",
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtYWlsQGVtYWlsLmNvbS51YSIsImlhdCI6MTY5NzMxNjAyNywiZXhwIjoxNjk3NDAyNDI3fQ.8sn4QPSfzgiGFhUiQzm1RW-mSdulR1rm50O4vdpqpxc"
+  },
+  {
+    "id": 3,
+    "email": "mail@mail",
+    "password": "$2b$10$EM//ZzCfgetB.fu8Iwr24.2Ev1FS7HULDDwvJhVM0Uxrk7BAP7OhS",
+    "refreshToken": ""
+  }
+]
