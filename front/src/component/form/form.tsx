@@ -1,34 +1,41 @@
 import Button from '../button/button'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   useForm,
   Controller,
   SubmitHandler,
   useFormState,
 } from 'react-hook-form'
-import TextField from '@mui/material/TextField'
-import Alert from '@mui/material/Alert'
-import { IconButton, InputAdornment, Stack } from '@mui/material'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
-  validateEmail,
-  validatePassword,
-  validateToken,
-} from '../../utils/validate'
+  IconButton,
+  InputAdornment,
+  Stack,
+  Alert,
+  TextField,
+} from '@mui/material'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { validateEmail, validatePassword } from '../../utils/validate'
 import { useState } from 'react'
+import axios from '../../api/axios'
+import { SignupSteps } from '../../utils/navRoutes'
+
+enum URLs {
+  signup = '/register',
+  signin = '/auth',
+}
 
 interface IFormInput {
   email: string
   password: string
-  code: string
 }
 interface IFormProps {
   isSignup?: boolean
   isSignin?: boolean
-  isToken?: boolean
 }
 
-const SignupForm: React.FC<IFormProps> = ({ isSignup, isSignin, isToken }) => {
+const SignupForm: React.FC<IFormProps> = ({ isSignup, isSignin }) => {
+  const navigation = useNavigate()
+
   // show password
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
@@ -44,104 +51,126 @@ const SignupForm: React.FC<IFormProps> = ({ isSignup, isSignin, isToken }) => {
   // submit handler
   const { handleSubmit, control } = useForm<IFormInput>()
   const { errors } = useFormState({ control })
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<IFormInput> = async (data, event) => {
     // TODO: send data to server
-    console.log(data)
-    setError('User is already exist')
+    event?.preventDefault()
+
+    try {
+      let response
+
+      if (isSignup) {
+        // send data to server: signup
+        response = await axios.post(
+          URLs.signup,
+          { email: data.email, password: data.password },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+          },
+        )
+
+        // console.log for debug
+        console.log(response.data)
+        console.log(response.data.accessToken)
+        console.log(JSON.stringify(response))
+
+        // if we get response from server - set error to null, else - set error
+        response.data.accessToken
+          ? setError(null)
+          : setError('User is already exist')
+
+        // redirecting to confirm page
+        navigation(SignupSteps.SignupConfirm)
+      }
+
+      if (isSignin) {
+        response = await axios.post(
+          URLs.signin,
+          { email: data.email, password: data.password },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+          },
+        )
+
+        navigation(SignupSteps.Balance)
+      }
+    } catch (error: any) {
+      if (!error?.response) {
+        setError('Something went wrong on server side')
+      } else if (error.response?.status === 409) {
+        setError('User is already exist')
+      } else {
+        setError('Registration Failed')
+      }
+    }
   }
 
   return (
     <>
       <form action='POST' className='form' onSubmit={handleSubmit(onSubmit)}>
-        {isSignup || isSignin ? (
-          <>
-            <Controller
-              control={control}
-              name='email'
-              rules={validateEmail}
-              render={({ field }) => {
-                return (
-                  <TextField
-                    id='outlined-helperText'
-                    label='Email'
-                    size='medium'
-                    type='email'
-                    fullWidth
-                    onChange={(e) => field.onChange(e)}
-                    value={field.value}
-                    autoComplete='off'
-                    error={!!errors.email?.message}
-                    helperText={errors.email?.message}
-                    inputProps={{ inputProps: { noValidate: 'noValidate' } }}
-                    placeholder='Enter your email'
-                    autoFocus
-                  />
-                )
-              }}
-            />
-            <Controller
-              control={control}
-              name='password'
-              rules={validatePassword}
-              render={({ field }) => {
-                return (
-                  <TextField
-                    id='outlined-helperText'
-                    label='Password'
-                    size='medium'
-                    type={showPassword ? 'text' : 'password'}
-                    fullWidth
-                    onChange={(e) => field.onChange(e)}
-                    value={field.value}
-                    autoComplete='off'
-                    error={!!errors.password?.message}
-                    helperText={errors.password?.message}
-                    placeholder='Enter your password'
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position='end'>
-                          <IconButton
-                            aria-label='toggle password visibility'
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                            edge='end'
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                )
-              }}
-            />
-          </>
-        ) : isToken ? (
-          <>
-            <Controller
-              control={control}
-              name='code'
-              rules={validateToken}
-              render={({ field }) => {
-                return (
-                  <TextField
-                    id='outlined-helperText'
-                    label='Code'
-                    size='medium'
-                    type='text'
-                    fullWidth
-                    onChange={(e) => field.onChange(e)}
-                    value={field.value}
-                    error={!!errors.code?.message}
-                    helperText={errors.code?.message}
-                    placeholder='Enter your code'
-                    autoFocus
-                  />
-                )
-              }}
-            />
-          </>
-        ) : null}
+        <Controller
+          control={control}
+          name='email'
+          rules={validateEmail}
+          render={({ field }) => {
+            return (
+              <TextField
+                id='outlined-helperText'
+                label='Email'
+                size='medium'
+                type='email'
+                fullWidth
+                onChange={(e) => field.onChange(e)}
+                value={field.value}
+                error={!!errors.email?.message}
+                helperText={errors.email?.message}
+                placeholder='Enter your email'
+                autoFocus
+              />
+            )
+          }}
+        />
+        <Controller
+          control={control}
+          name='password'
+          rules={validatePassword}
+          render={({ field }) => {
+            return (
+              <TextField
+                id='outlined-helperText'
+                label='Password'
+                size='medium'
+                type={showPassword ? 'text' : 'password'}
+                fullWidth
+                onChange={(e) => field.onChange(e)}
+                value={field.value}
+                autoComplete='off'
+                error={!!errors.password?.message}
+                helperText={errors.password?.message}
+                placeholder='Enter your password'
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <IconButton
+                        aria-label='toggle password visibility'
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        edge='end'
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            )
+          }}
+        />
         {isSignup && (
           <>
             <span className='form__message'>

@@ -1,4 +1,3 @@
-const EMAIL_REGEX = new RegExp(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)
 enum EmailErrors {
   REQUIRED = 'Email is required',
   INVALID = 'Invalid email',
@@ -22,7 +21,7 @@ export const validateEmail = {
     if (!value.match(/^[A-Za-z0-9@.]+$/)) {
       return EmailErrors.LATIN
     }
-    if (value.match(EMAIL_REGEX)) {
+    if (!value.match(/^[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z0-9]+$/)) {
       return EmailErrors.INVALID
     }
     return true

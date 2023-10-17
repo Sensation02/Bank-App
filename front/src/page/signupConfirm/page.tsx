@@ -4,7 +4,6 @@ import Button from '../../component/button/button'
 import Navigation from '../../component/navigation/navigation'
 import { SignupSteps } from '../../utils/navRoutes'
 import { useNavigate } from 'react-router-dom'
-import Form from '../../component/form/form'
 
 const SignupConfirm: React.FC = () => {
   const navigation = useNavigate()
@@ -20,7 +19,6 @@ const SignupConfirm: React.FC = () => {
         subtitle='Write the code you received'
         isBlack
       />
-      <Form isToken />
       <Button text='Confirm' isMain />
     </section>
   )
