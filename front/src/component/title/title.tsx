@@ -2,8 +2,8 @@ import React from 'react'
 import './style.scss'
 
 interface TitleProps {
-  title: string
-  subtitle: string
+  title?: string
+  subtitle?: string
   isBlack?: boolean
 }
 

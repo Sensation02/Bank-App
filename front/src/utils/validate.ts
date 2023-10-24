@@ -14,6 +14,11 @@ enum TokenErrors {
   REQUIRED = 'Code is required',
   INVALID = 'Invalid code',
 }
+enum DEFAULT_ERRORS {
+  REQUIRED = 'Field is required',
+  NUMBER = 'Field must be a number',
+  LETTERS = 'Field must contain only letters',
+}
 
 export const validateEmail = {
   required: EmailErrors.REQUIRED,
@@ -37,7 +42,7 @@ export const validatePassword = {
     if (!value.match(/[A-Z]/)) {
       return PasswordErrors.CONTAIN_UPPERCASE
     }
-    if (!value.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)) {
+    if (!value.match(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/)) {
       return PasswordErrors.CONTAIN_SPECIAL_CHARACTER
     }
     if (!value.match(/[0-9]/)) {
@@ -52,6 +57,16 @@ export const validateToken = {
   validate: (value: string) => {
     if (!value.match(/^[A-Za-z0-9]+$/)) {
       return TokenErrors.INVALID
+    }
+    return true
+  },
+}
+
+export const validateAmount = {
+  required: DEFAULT_ERRORS.REQUIRED,
+  validate: (value: string) => {
+    if (!value.match(/^[0-9]+$/)) {
+      return DEFAULT_ERRORS.NUMBER
     }
     return true
   },

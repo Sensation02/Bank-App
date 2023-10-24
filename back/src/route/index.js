@@ -13,6 +13,9 @@ router.use('/refresh', require('./refresh'))
 // route for logout
 router.use('/logout', require('./logout'))
 
+// route for payment systems
+router.use('/payment', require('./payment'))
+
 // for verifying JWT token we use verifyJWT middleware before all routes which we want to protect
 router.use(verifyJWT)
 // so verifyJWT middleware will be applied to all routes below

@@ -1,0 +1,12 @@
+.alert__text::after {
+  display: inline-block;
+  content: "";
+  background-color: #939199;
+  border-radius: 50%;
+  width: 0.3rem;
+  height: 0.3rem;
+}
+
+.alert__type {
+  padding-left: 0.5em;
+}

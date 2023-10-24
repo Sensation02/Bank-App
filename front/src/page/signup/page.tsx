@@ -2,14 +2,13 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import Title from '../../component/title/title'
 import Navigation from '../../component/navigation/navigation'
-import { SignupSteps } from '../../utils/navRoutes'
 import Form from '../../component/form/form'
 import './style.scss'
 
 const Signup: React.FC = () => {
   const navigation = useNavigate()
   const handleBack = () => {
-    navigation(SignupSteps.Index)
+    navigation('/')
   }
 
   return (

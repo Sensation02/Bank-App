@@ -5,6 +5,7 @@
 
   .form {
     @include s.form__content();
+    padding: 0;
 
     .form__message {
       @include s.form__message();

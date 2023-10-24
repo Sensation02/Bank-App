@@ -1,0 +1,13 @@
+.page {
+  position: relative;
+  height: 100%;
+}
+.page .page__content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  align-items: start;
+  gap: 2em;
+}

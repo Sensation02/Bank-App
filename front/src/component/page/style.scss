@@ -1,0 +1,11 @@
+@use '../../style/service.scss' as s;
+
+.page {
+  @include s.page;
+  .page__content {
+    @include s.page-content;
+    @include s.flex-column;
+    align-items: start;
+    gap: 2em;
+  }
+}

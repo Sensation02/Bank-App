@@ -1,0 +1,8 @@
+@use '../../style/service.scss' as s;
+
+.alert__text::after {
+  @include s.dot-divider;
+}
+.alert__type {
+  padding-left: 0.5em;
+}

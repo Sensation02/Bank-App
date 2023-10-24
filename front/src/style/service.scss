@@ -9,3 +9,9 @@
 
 @use './form.scss';
 @forward './form.scss';
+
+@use './page.scss';
+@forward './page.scss';
+
+@use './dot.scss';
+@forward './dot.scss';

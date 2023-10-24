@@ -1,0 +1,13 @@
+@mixin page {
+  position: relative;
+  height: 100%;
+}
+@mixin page-content {
+  padding: 2rem;
+}
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}

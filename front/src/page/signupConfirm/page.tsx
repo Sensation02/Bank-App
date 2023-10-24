@@ -2,7 +2,7 @@ import './style.scss'
 import Title from '../../component/title/title'
 import Button from '../../component/button/button'
 import Navigation from '../../component/navigation/navigation'
-import { SignupSteps } from '../../utils/navRoutes'
+import SignupSteps from '../../utils/navRoutes'
 import { useNavigate } from 'react-router-dom'
 
 const SignupConfirm: React.FC = () => {
@@ -11,15 +11,19 @@ const SignupConfirm: React.FC = () => {
     navigation(SignupSteps.Signup)
   }
 
+  const handleButton = () => {
+    navigation(SignupSteps.Balance)
+  }
+
   return (
     <section className='signup-confirm'>
       <Navigation handleClick={handleNavigation} />
       <Title
-        title='Confirm account'
-        subtitle='Write the code you received'
+        title='You are all set!'
+        subtitle="Let's start your journey with us!"
         isBlack
       />
-      <Button text='Confirm' isMain />
+      <Button text="Let's Go" isMain onClick={handleButton} />
     </section>
   )
 }

@@ -11,6 +11,9 @@
   &__title {
     font-size: s.font-size(subtitle);
     font-weight: 500;
+    &--white {
+      color: #fff;
+    }
   }
   .icon {
     @include s.icon;

@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   padding: 1.25rem 8.5rem;
-  border-radius: 12px;
+  border-radius: 4px;
   width: 100%;
 }
 
@@ -24,6 +24,7 @@
 }
 .secondary:hover {
   opacity: 0.8;
+  background-color: rgba(119, 92, 229, 0.2431372549);
 }
 
 .disabled {

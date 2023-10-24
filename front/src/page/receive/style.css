@@ -1,0 +1,18 @@
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.list {
+  width: 100%;
+}
+.list .box {
+  align-items: start;
+}
+.list .list__item {
+  padding: 1em;
+}
+.list .list__item:hover {
+  background-color: #e9e8eb;
+  cursor: pointer;
+}

@@ -12,6 +12,9 @@
   font-size: 1.25rem;
   font-weight: 500;
 }
+.navigation__title--white {
+  color: #fff;
+}
 .navigation .icon {
   width: 24px;
   height: 24px;

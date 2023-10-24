@@ -1,12 +1,1 @@
-[
-  {
-    "id": 1,
-    "email": "example@email.com",
-    "password": "password"
-  },
-  {
-    "id": 2,
-    "email": "mail12@mail.com",
-    "password": "$2b$10$6kQYwVmuTdnBEJQLqD5sielLO39yBupJUBBqDAqfHoJn1WNt5XAp."
-  }
-]
+[{"id":1,"email":"example@email.com","password":"password"},{"id":2,"email":"mail@mail.com","password":"$2b$10$Vv1VV3.dbNxZKyqQKtr7p.AMfrQPBEiwgy5Rg6FoHURJaqA3F0hja","refreshToken":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1haWxAbWFpbC5jb20iLCJpYXQiOjE2OTgxNjUxMzEsImV4cCI6MTY5ODI1MTUzMX0.YtSO8Ly1bR90vrddTnQEMtuwP3A8FNbKnEDdO5oqnfo"}]

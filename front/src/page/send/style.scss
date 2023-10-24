@@ -1,0 +1,6 @@
+@use '../../style/service.scss' as s;
+
+.form {
+  @include s.form__content;
+  padding: 0;
+}

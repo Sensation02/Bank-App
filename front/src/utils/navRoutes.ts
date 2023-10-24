@@ -1,4 +1,4 @@
-export enum SignupSteps {
+enum SignupSteps {
   SignupConfirm = '/signup-confirm',
   Signup = '/signup',
   Signin = '/signin',
@@ -12,3 +12,5 @@ export enum SignupSteps {
   Transactions = '/transactions',
   Index = '/',
 }
+
+export default SignupSteps

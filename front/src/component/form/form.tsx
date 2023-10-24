@@ -15,13 +15,14 @@ import {
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { validateEmail, validatePassword } from '../../utils/validate'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import axios from '../../api/axios'
-import { SignupSteps } from '../../utils/navRoutes'
+import SignupSteps from '../../utils/navRoutes'
+import { AuthContext } from '../../context/AuthProvider'
 
-enum URLs {
-  signup = '/register',
-  signin = '/auth',
+enum URL {
+  REGISTRATION = '/register',
+  LOGIN = '/auth',
 }
 
 interface IFormInput {
@@ -48,11 +49,13 @@ const SignupForm: React.FC<IFormProps> = ({ isSignup, isSignin }) => {
   // error: user is already exist
   const [error, setError] = useState<string | null>('')
 
+  // context
+  const { auth, setAuth } = useContext(AuthContext)
+
   // submit handler
   const { handleSubmit, control } = useForm<IFormInput>()
   const { errors } = useFormState({ control })
   const onSubmit: SubmitHandler<IFormInput> = async (data, event) => {
-    // TODO: send data to server
     event?.preventDefault()
 
     try {
@@ -61,7 +64,7 @@ const SignupForm: React.FC<IFormProps> = ({ isSignup, isSignin }) => {
       if (isSignup) {
         // send data to server: signup
         response = await axios.post(
-          URLs.signup,
+          URL.REGISTRATION,
           { email: data.email, password: data.password },
           {
             headers: {
@@ -76,10 +79,15 @@ const SignupForm: React.FC<IFormProps> = ({ isSignup, isSignin }) => {
         console.log(response.data.accessToken)
         console.log(JSON.stringify(response))
 
-        // if we get response from server - set error to null, else - set error
-        response.data.accessToken
-          ? setError(null)
-          : setError('User is already exist')
+        if (!response) {
+          setError('No server response')
+        } else if (response?.status === 400) {
+          setError('Wrong email or password')
+        } else if (response?.status === 401) {
+          setError('Unauthorized')
+        } else {
+          setError('Login Failed')
+        }
 
         // redirecting to confirm page
         navigation(SignupSteps.SignupConfirm)
@@ -87,7 +95,7 @@ const SignupForm: React.FC<IFormProps> = ({ isSignup, isSignin }) => {
 
       if (isSignin) {
         response = await axios.post(
-          URLs.signin,
+          URL.LOGIN,
           { email: data.email, password: data.password },
           {
             headers: {
@@ -97,6 +105,27 @@ const SignupForm: React.FC<IFormProps> = ({ isSignup, isSignin }) => {
           },
         )
 
+        // for debug
+        console.log(response?.data)
+
+        // set auth data to context
+        const accessToken = response?.data?.accessToken
+        const email = response?.data?.email
+        const password = response?.data?.password
+        setAuth({ email, password, accessToken })
+
+        // checking response and set error if it is
+        if (!response) {
+          setError('No server response')
+        } else if (response?.status === 400) {
+          setError('Wrong email or password')
+        } else if (response?.status === 401) {
+          setError('Unauthorized')
+        } else {
+          setError('Login Failed')
+        }
+
+        // redirecting to balance page
         navigation(SignupSteps.Balance)
       }
     } catch (error: any) {
@@ -192,6 +221,13 @@ const SignupForm: React.FC<IFormProps> = ({ isSignup, isSignin }) => {
               Forgot password? <Link to={'/recovery'}>Recover</Link>
             </span>
             <Button isMain type='submit' text='Sign In'></Button>
+            {error && (
+              <Stack sx={{ width: '100%' }} spacing={2}>
+                <Alert variant='outlined' severity='error'>
+                  {error}
+                </Alert>
+              </Stack>
+            )}
           </>
         )}
       </form>

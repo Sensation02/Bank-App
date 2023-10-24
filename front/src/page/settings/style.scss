@@ -1,0 +1,5 @@
+@use '../../style/service.scss' as s;
+
+.form__settings {
+  @include s.form__content;
+}
