@@ -7,7 +7,10 @@ import SignupSteps from '../../utils/navRoutes'
 import BackgroundImage from '../../assets/images/background-2.png'
 import { useNavigate } from 'react-router-dom'
 import './style.scss'
-import Page from '../../component/page/page'
+
+type Props = {
+  isLoggedIn: boolean | null
+}
 
 const BalancePage: React.FC = () => {
   const navigate = useNavigate()

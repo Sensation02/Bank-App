@@ -40,13 +40,13 @@ const createUser = (req, res) => {
 
 const updateUser = (req, res) => {
   const user = data.users.find(
-    (user) => user.id === parseInt(req.body.id),
+    (user) => user.email === parseInt(req.body.email),
   )
 
   // if user doesn't exist - return error
   if (!user) {
     return res.status(400).json({
-      message: `User with ID: ${req.body.id} not found`,
+      message: `User with such email: ${req.body.email} not found`,
     })
   }
   // if user exists - update user

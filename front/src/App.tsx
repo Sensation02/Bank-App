@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Welcome from './page/welcome/page'
 import Signup from './page/signup/page'
@@ -11,39 +11,84 @@ import Notifications from './page/notifications/page'
 import Settings from './page/settings/page'
 import Receive from './page/receive/page'
 import Send from './page/send/page'
-import { AuthProvider } from './context/AuthProvider'
 import './style/global.scss'
+import PrivateRoute, { AuthContext } from './component/requireAuth/requireAuth'
 
 const Error: React.FC = () => {
   return <h1>Not found</h1>
 }
 
 function App() {
+  const [isLogged, login] = useState(false)
   return (
     <main className='app'>
       <section className='app__container'>
-        <AuthProvider>
+        <AuthContext.Provider value={{ isLogged, login }}>
           <BrowserRouter>
             <Routes>
+              {/* Public routes */}
               <Route index element={<Welcome />} />
               <Route path='/signup' element={<Signup />} />
               <Route path='/signup-confirm' element={<SignupConfirm />} />
               <Route path='/signin' element={<Signin />} />
               <Route path='/recovery' element={<Recovery />} />
               <Route path='/recovery-confirm' element={<RecoveryConfirm />} />
-              <Route path='/balance' element={<Balance />} />
-              <Route path='/notifications' element={<Notifications />} />
-              <Route path='/settings' element={<Settings />} />
-              <Route path='/receive' element={<Receive />} />
-              <Route path='/send' element={<Send />} />
+
+              {/* Privet routes */}
+              <Route
+                path='/balance'
+                element={
+                  <PrivateRoute>
+                    <Balance />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path='/notifications'
+                element={
+                  <PrivateRoute>
+                    <Notifications />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path='/settings'
+                element={
+                  <PrivateRoute>
+                    <Settings />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path='/receive'
+                element={
+                  <PrivateRoute>
+                    <Receive />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path='/send'
+                element={
+                  <PrivateRoute>
+                    <Send />
+                  </PrivateRoute>
+                }
+              />
               <Route
                 path='/transactions/:transactionsId'
-                element={<h1>Transactions</h1>}
+                element={
+                  <PrivateRoute>
+                    <h1>Transactions</h1>
+                  </PrivateRoute>
+                }
               />
+
+              {/* Error - catch all */}
               <Route path='*' element={<Error />} />
             </Routes>
           </BrowserRouter>
-        </AuthProvider>
+        </AuthContext.Provider>
       </section>
     </main>
   )
