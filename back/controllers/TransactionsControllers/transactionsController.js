@@ -3,7 +3,27 @@ const data = {
 }
 
 const getAllTransactions = (req, res) => {
-  return res.status(200).json(data.transactions)
+  // calculate total amount based on type of transaction
+  // if type is 'receive' - add amount to total, if 'send' - subtract
+  const getAmount = data.transactions.reduce(
+    (acc, transaction) => {
+      const amount = parseFloat(transaction.amount)
+      return transaction.type === 'receive'
+        ? acc + amount
+        : acc - amount
+    },
+    0,
+  )
+
+  // round to 2 decimal places
+  const totalAmount = getAmount.toFixed(2)
+
+  // create response data
+  const responseData = {
+    totalAmount,
+    transactions: data.transactions,
+  }
+  return res.status(200).json(responseData)
 }
 
 const createTransaction = (req, res) => {

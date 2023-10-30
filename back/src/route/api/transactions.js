@@ -4,7 +4,8 @@ const router = express.Router()
 const {
   getAllTransactions,
   createTransaction,
-} = require('../../../controllers/transactionsController')
+  getTransactionById,
+} = require('../../../controllers/TransactionsControllers/transactionsController')
 
 router
   .get('/', getAllTransactions)

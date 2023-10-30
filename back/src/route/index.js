@@ -14,7 +14,7 @@ router.use('/refresh', require('./refresh'))
 router.use('/logout', require('./logout'))
 
 // route for transactions
-router.use('/transactions', require('./transactions'))
+router.use('/transactions', require('./api/transactions'))
 
 // for verifying JWT token we use verifyJWT middleware before all routes which we want to protect
 router.use(verifyJWT)

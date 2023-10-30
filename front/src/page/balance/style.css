@@ -10,8 +10,6 @@
   z-index: -2;
 }
 .balance__page .page__content {
-  display: flex;
-  flex-direction: column;
   padding: 2rem;
 }
 .balance__page .page__content .balance__heading {
@@ -102,5 +100,11 @@
 .balance__page .page__content .transactions__item .item__amount {
   font-size: 1.25rem;
   font-weight: bold;
+  color: #121212;
+}
+.balance__page .page__content .transactions__item .item__amount.receive {
   color: #26bf80;
+}
+.balance__page .page__content .transactions__item .item__amount.send {
+  color: #f23152;
 }

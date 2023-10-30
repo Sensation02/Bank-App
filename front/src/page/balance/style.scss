@@ -93,7 +93,14 @@
         .item__amount {
           font-size: s.font-size('subtitle');
           font-weight: bold;
-          color: s.color('green');
+          color: s.color('black');
+
+          &.receive {
+            color: s.color('green');
+          }
+          &.send {
+            color: s.color('red');
+          }
         }
       }
     }
