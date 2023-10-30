@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "date": "25/05 12:00",
+    "email": "mail@mail.com",
+    "amount": "125.00$",
+    "type": "Receive"
+  },
+  {
+    "id": 2,
+    "date": "25/05 12:20",
+    "email": "email12@email.com",
+    "amount": "200.00$",
+    "type": "Send"
+  }
+]
