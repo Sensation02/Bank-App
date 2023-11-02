@@ -9,8 +9,10 @@ enum SignupSteps {
   Settings = '/settings',
   Receive = '/receive',
   Send = '/send',
-  Transactions = '/transactions',
+  Transaction = '/balance/:transactionId',
   Index = '/',
 }
+
+export const ApiURL = 'http://localhost:4000'
 
 export default SignupSteps

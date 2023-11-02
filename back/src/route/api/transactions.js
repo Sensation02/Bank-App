@@ -11,6 +11,6 @@ router
   .get('/', getAllTransactions)
   .post('/', createTransaction)
 
-router.route('/:transactionId').get(getTransactionById)
+router.route('/:id').get(getTransactionById)
 
 module.exports = router

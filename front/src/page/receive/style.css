@@ -3,6 +3,10 @@
   height: 24px;
 }
 
+.receive__form {
+  width: 100%;
+}
+
 .list {
   width: 100%;
 }
@@ -14,5 +18,6 @@
 }
 .list .list__item:hover {
   background-color: #e9e8eb;
+  border-radius: 8px;
   cursor: pointer;
 }

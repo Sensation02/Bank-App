@@ -13,6 +13,7 @@ import Receive from './page/receive/page'
 import Send from './page/send/page'
 import './style/global.scss'
 import PrivateRoute, { AuthContext } from './component/requireAuth/requireAuth'
+import Transaction from './page/transaction/page'
 
 const Error: React.FC = () => {
   return <h1>Not found</h1>
@@ -76,10 +77,10 @@ function App() {
                 }
               />
               <Route
-                path='/transactions/:transactionsId'
+                path='/balance/:transactionId'
                 element={
                   <PrivateRoute>
-                    <h1>Transactions</h1>
+                    <Transaction />
                   </PrivateRoute>
                 }
               />

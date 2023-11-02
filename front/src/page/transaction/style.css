@@ -1,0 +1,9 @@
+.table {
+  background-color: #fff;
+  padding: 0.5em;
+  border-radius: 16px;
+}
+
+.page .page__content {
+  align-items: center;
+}

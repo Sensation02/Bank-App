@@ -110,7 +110,11 @@ const BalancePage: React.FC = () => {
         ) : data ? (
           <ul className='transactions'>
             {data.map((item) => (
-              <li className='transactions__item' key={item.id}>
+              <li
+                className='transactions__item'
+                key={item.id}
+                onClick={() => navigate(`/balance/${item.id}`)}
+              >
                 <div className='item__description'>
                   <div className='description__icon'>
                     <img src={userIcon} alt='coinbase' />

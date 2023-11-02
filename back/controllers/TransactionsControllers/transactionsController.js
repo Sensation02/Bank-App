@@ -58,7 +58,7 @@ const createTransaction = (req, res) => {
 const getTransactionById = (req, res) => {
   const transaction = data.transactions.find(
     (transaction) =>
-      transaction.id === parseInt(req.params.id),
+      transaction.id === Number(req.params.id),
   )
 
   // if transaction doesn't exist - return error
