@@ -12,5 +12,12 @@
     "email": "email12@email.com",
     "amount": "200.00",
     "type": "send"
+  },
+  {
+    "id": 3,
+    "date": "05/11 15:57",
+    "email": "Coinbase",
+    "amount": "150.50",
+    "type": "receive"
   }
 ]

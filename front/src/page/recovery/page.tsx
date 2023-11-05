@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import { validateEmail } from '../../utils/validate'
 import axios from 'axios'
 import { useState } from 'react'
+import { ApiURL } from '../../utils/navRoutes'
 
 import './style.scss'
 
@@ -30,32 +31,21 @@ const Recovery: React.FC = () => {
   const [error, setError] = useState<string | null>('')
   const onSubmit: SubmitHandler<IFormInput> = async (data, event) => {
     event?.preventDefault()
-    // console.log(data)
     const { email } = data
     try {
-      const res = await axios.put(
-        'http://localhost:4000/users',
-        { email: email },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          withCredentials: true,
-        },
-      )
+      const response = await axios.post(`${ApiURL}/users`, { email: email })
 
-      console.log(res.data)
-
-      if (!res) {
-        setError('No server response')
-      } else if (res?.status === 400) {
-        setError('Wrong email or password')
-      } else if (res?.status === 401) {
-        setError('Unauthorized')
-      } else if (!res?.data?.accessToken) {
-        setError('Login Failed')
+      if (response.status === 404) {
+        setError(response.data.message)
+      } else {
+        setError(null)
+        navigate('/recovery-confirm')
       }
-    } catch (error) {}
+    } catch (error: any) {
+      if (error.response) {
+        setError(error.response.data.message)
+      }
+    }
   }
 
   return (
@@ -67,7 +57,7 @@ const Recovery: React.FC = () => {
           subtitle='enter your email to recover your password'
           isBlack
         />
-        <form action='PUT' className='form' onSubmit={handleSubmit(onSubmit)}>
+        <form action='POST' className='form' onSubmit={handleSubmit(onSubmit)}>
           <Controller
             control={control}
             name='email'

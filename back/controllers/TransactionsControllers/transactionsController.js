@@ -1,6 +1,12 @@
 const data = {
   transactions: require('../../model/transactions.json'),
+  setTransactions: function (data) {
+    this.transactions = data
+  },
 }
+const { format } = require('date-fns')
+const path = require('path')
+const fsPromises = require('fs').promises
 
 const getAllTransactions = (req, res) => {
   // calculate total amount based on type of transaction
@@ -26,14 +32,16 @@ const getAllTransactions = (req, res) => {
   return res.status(200).json(responseData)
 }
 
-const createTransaction = (req, res) => {
+const createTransaction = async (req, res) => {
   const { email, amount, type } = req.body
+  date = format(new Date(), 'dd/MM HH:mm')
+  console.log(date)
 
   // check if email and amount are not empty
-  if (!email || !amount) {
+  if (!amount) {
     return res
       .status(400)
-      .json({ message: 'Error. Please fill all fields' })
+      .json({ message: 'Error. Please fill amount field' })
   }
 
   const newTransaction = {
@@ -48,6 +56,20 @@ const createTransaction = (req, res) => {
 
   // add transaction to transactions data
   data.transactions.push(newTransaction)
+  // or
+  // const otherTransactions = data.transactions.filter(
+  //   (transaction) => transaction.id !== newTransaction.id,
+  // )
+  // data.transactions.setTransactions([
+  //   ...otherTransactions,
+  //   newTransaction,
+  // ])
+
+  // save transactions data to file
+  await fsPromises.writeFile(
+    path.join(__dirname, '../../model/transactions.json'),
+    JSON.stringify(data.transactions, null, 2),
+  )
 
   res.status(201).json({
     message: 'Successfully created!',
@@ -56,9 +78,9 @@ const createTransaction = (req, res) => {
 }
 
 const getTransactionById = (req, res) => {
+  const id = Number(req.params.id)
   const transaction = data.transactions.find(
-    (transaction) =>
-      transaction.id === Number(req.params.id),
+    (transaction) => transaction.id === id,
   )
 
   // if transaction doesn't exist - return error

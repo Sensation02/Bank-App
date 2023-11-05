@@ -65,7 +65,7 @@ export const validateToken = {
 export const validateAmount = {
   required: DEFAULT_ERRORS.REQUIRED,
   validate: (value: string) => {
-    if (!value.match(/^[0-9]+$/)) {
+    if (!value.match(/^[+-]?([0-9]*[.])?[0-9]+$/)) {
       return DEFAULT_ERRORS.NUMBER
     }
     return true

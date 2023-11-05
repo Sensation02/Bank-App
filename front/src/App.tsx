@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
 import Welcome from './page/welcome/page'
 import Signup from './page/signup/page'
 import SignupConfirm from './page/signupConfirm/page'
@@ -11,12 +11,28 @@ import Notifications from './page/notifications/page'
 import Settings from './page/settings/page'
 import Receive from './page/receive/page'
 import Send from './page/send/page'
-import './style/global.scss'
 import PrivateRoute, { AuthContext } from './component/requireAuth/requireAuth'
 import Transaction from './page/transaction/page'
+import Page from './component/page/page'
+import Title from './component/title/title'
+import './style/global.scss'
+import Navigation from './component/navigation/navigation'
 
 const Error: React.FC = () => {
-  return <h1>Not found</h1>
+  const navigate = useNavigate()
+  return (
+    <Page>
+      <Navigation
+        handleClick={() => {
+          navigate('/')
+        }}
+        title='Navigate to Welcome page'
+      />
+      <br />
+      <br />
+      <Title title='404' subtitle='Page not found' isBlack />
+    </Page>
+  )
 }
 
 function App() {

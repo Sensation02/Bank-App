@@ -1,5 +1,5 @@
 import Navigation from '../../component/navigation/navigation'
-import SignupSteps from '../../utils/navRoutes'
+import SignupSteps, { ApiURL } from '../../utils/navRoutes'
 import { validateEmail, validatePassword } from '../../utils/validate'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -16,17 +16,75 @@ import ButtonMain from '../../component/button/button'
 import './style.scss'
 import Page from '../../component/page/page'
 import Title from '../../component/title/title'
+import axios from '../../api/axios'
 
 type FormInputs = {
   email: string
   password: string
   oldPassword: string
+  newPassword: string
 }
 
 const Settings = () => {
   const { control, handleSubmit } = useForm<FormInputs>()
   const { errors } = useFormState({ control })
-  const onSubmit = (data: FormInputs) => console.log(data)
+
+  const onSubmitEmail: SubmitHandler<FormInputs> = async (data, event) => {
+    event?.preventDefault()
+
+    try {
+      const res = await axios.put(`${ApiURL}/users`, {
+        email: data.email,
+        password: data.password,
+      })
+
+      if (res.status === 200) {
+        console.log('email changed')
+      }
+    } catch (error: any) {
+      if (error.response) {
+        console.log(error.response.data)
+      }
+    }
+  }
+
+  const onSubmitPassword: SubmitHandler<FormInputs> = async (data, event) => {
+    event?.preventDefault()
+
+    try {
+      const res = await axios.put(`${ApiURL}/users`, {
+        oldPassword: data.oldPassword,
+        newPassword: data.newPassword,
+      })
+
+      if (res.status === 200) {
+        console.log('password changed')
+      }
+    } catch (error: any) {
+      if (error.response) {
+        console.log(error.response.data)
+      }
+    }
+  }
+
+  const handleLogout = async (event: any) => {
+    event?.preventDefault()
+
+    try {
+      const res = await axios.get(`${ApiURL}/logout`)
+
+      if (res.status === 204) {
+        localStorage.removeItem('token')
+        localStorage.removeItem('refreshToken')
+        console.log('logout')
+        navigate(SignupSteps.Signin)
+      }
+    } catch (error: any) {
+      if (error.response) {
+        console.log(error.response.data)
+      }
+    }
+  }
 
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(!showPassword)
@@ -45,7 +103,7 @@ const Settings = () => {
     <Page>
       <Navigation title='Settings' handleClick={handleBack} />
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmitEmail)}
         action='PUT'
         className='form__settings'
       >
@@ -113,12 +171,12 @@ const Settings = () => {
       <form
         action='PUT'
         className='form__settings'
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmitPassword)}
       >
         <Title subtitle='Change Password' isBlack />
         <Controller
           control={control}
-          name='password'
+          name='oldPassword'
           rules={validatePassword}
           render={({ field }) => {
             return (
@@ -154,7 +212,7 @@ const Settings = () => {
         />
         <Controller
           control={control}
-          name='password'
+          name='newPassword'
           rules={validatePassword}
           render={({ field }) => {
             return (
@@ -192,7 +250,13 @@ const Settings = () => {
       </form>
       <Divider sx={{ border: '1px solid lightgray', width: '100%' }} />
       <br />
-      <Button variant='outlined' color='error' fullWidth size='large'>
+      <Button
+        variant='outlined'
+        color='error'
+        fullWidth
+        size='large'
+        onClick={handleLogout}
+      >
         Logout
       </Button>
     </Page>

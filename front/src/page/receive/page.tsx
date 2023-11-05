@@ -8,7 +8,6 @@ import Navigation from '../../component/navigation/navigation'
 import Page from '../../component/page/page'
 import {
   Avatar,
-  IconButton,
   List,
   ListItem,
   ListItemAvatar,
@@ -25,8 +24,8 @@ import Divider from '@mui/material/Divider'
 import axios from '../../api/axios'
 import { useNavigate } from 'react-router-dom'
 // import { ApiURL } from '../../utils/navRoutes'
-import { format } from 'date-fns'
 import './style.scss'
+import { ApiURL } from '../../utils/navRoutes'
 
 type FormInputs = {
   money: string
@@ -42,31 +41,39 @@ const Receive = () => {
 
   const { handleSubmit, control } = useForm<FormInputs>()
   const { errors } = useFormState({ control })
+  const type = 'receive'
 
-  const onSubmit: SubmitHandler<FormInputs> = async (data, event) => {
+  const onSubmitCoinbase: SubmitHandler<FormInputs> = async (data, event) => {
     event?.preventDefault()
-
     const { money } = data
-    const type = 'receive'
-    let email = 'email'
-
-    if (document.onclick === document.getElementById('1')) {
-      email = 'coinbase'
-      console.log(email)
-    } else if (document.onclick === document.getElementById('2')) {
-      email = 'stripe'
-      console.log(email)
-    }
 
     try {
-      const response = await axios.post('http://localhost:4000/transaction', {
+      const response = await axios.post(`${ApiURL}/transactions`, {
         amount: money,
         type: type,
-        email: email,
-        date: format(new Date(), 'dd.MM HH:mm'),
+        email: 'Coinbase',
       })
       console.log(response)
-      if (response.status === 200) {
+      if (response.status === 201) {
+        navigate('/balance')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const onSubmitStripe: SubmitHandler<FormInputs> = async (data, event) => {
+    event?.preventDefault()
+    const { money } = data
+
+    try {
+      const response = await axios.post('http://localhost:4000/transactions/', {
+        amount: money,
+        type: type,
+        email: 'Stripe',
+      })
+      console.log(response)
+      if (response.status === 201) {
         navigate('/balance')
       }
     } catch (error) {
@@ -114,7 +121,11 @@ const Receive = () => {
           >
             <ListItem
               secondaryAction={
-                <button id='1' type='button' onClick={handleSubmit(onSubmit)}>
+                <button
+                  id='1'
+                  type='button'
+                  onClick={handleSubmit(onSubmitCoinbase)}
+                >
                   <img src={bank_2} alt='Coinbase_icon' />
                 </button>
               }
@@ -132,7 +143,11 @@ const Receive = () => {
             </ListItem>
             <ListItem
               secondaryAction={
-                <button id='2' type='button' onClick={handleSubmit(onSubmit)}>
+                <button
+                  id='2'
+                  type='button'
+                  onClick={handleSubmit(onSubmitStripe)}
+                >
                   <img src={bank_1} alt='Stripe_icon' />
                 </button>
               }

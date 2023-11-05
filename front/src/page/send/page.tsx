@@ -1,11 +1,18 @@
 import Navigation from '../../component/navigation/navigation'
 import Page from '../../component/page/page'
 import { useNavigate } from 'react-router-dom'
-import { Controller, useForm, useFormState } from 'react-hook-form'
+import {
+  Controller,
+  SubmitHandler,
+  useForm,
+  useFormState,
+} from 'react-hook-form'
 import { validateAmount, validateEmail } from '../../utils/validate'
 import { TextField } from '@mui/material'
 import Button from '../../component/button/button'
 import './style.scss'
+import axios from '../../api/axios'
+import { ApiURL } from '../../utils/navRoutes'
 
 type FormInputs = {
   email: string
@@ -18,13 +25,33 @@ const Send: React.FC = () => {
     navigate('/balance')
   }
 
-  const { control } = useForm<FormInputs>()
+  const { handleSubmit, control } = useForm<FormInputs>()
   const { errors } = useFormState({ control })
+  const type = 'send'
+
+  const onSubmit: SubmitHandler<FormInputs> = async (data, event) => {
+    event?.preventDefault()
+    const { email, money } = data
+
+    try {
+      const response = await axios.post(`${ApiURL}/transactions`, {
+        amount: money,
+        type: type,
+        email: email,
+      })
+      console.log(response)
+      if (response.status === 201) {
+        navigate('/balance')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <Page>
       <Navigation title='Send' handleClick={handleBack} />
-      <form className='form'>
+      <form className='form' action='POST' onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
           name='email'
